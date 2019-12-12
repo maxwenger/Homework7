@@ -20,8 +20,13 @@ private:
     // The key of the map entry is the node value
     // The value of the map entry is the "neighbours" of this node.
     // Here a node B is considered a "neighbour" of a node A when there is a edge that goes from A to B
-    map<int, SingleLinkedList<int> *> nodes;
+    map<int, SingleLinkedList<int>*> nodes;
 
+	bool VecContains(vector<int> victor, int key) {
+		return std::count(victor.begin(), victor.end(), key);
+	}
+
+	int topSortRecur(int vectorIndex, int visitingIndex, vector<bool>& visited, int currentKey, LinkedStack<int>* sorted); 
     void topologySort(int val, LinkedStack<int> &, set<int> &);
 
 public:
