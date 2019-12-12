@@ -32,36 +32,27 @@ void DirectedGraph::printGraph() {
     }
 }
 
-int DirectedGraph::topSortRecur(int vectorIndex, int visitingIndex, vector<int> visited, int currentKey, LinkedStack<int>* sorted) {
-	visited.push_back(currentKey);
+void DirectedGraph::topSortRecur(int currNode, vector<int>* sorted) {
+	vector<int> edges = nodes[currNode]->toVector();
+	for(auto const& edge : edges) {
+		if(!VecContains(sorted, edge)) {
+			topSortRecur(edge, sorted);
+		}
+	}
 
-	vector<int>* dests = nodes[currentKey].toVector(); 
-	for(int const& dest : dests) {
-		if(!VecContains(visited, dest) {
-				topSortRecur(
-
-	return 0;
+	sorted->push_back(currNode);
 }
 
 vector<int>* DirectedGraph::topologySort() {
-	int size = nodes.size();
-	vector<int> visited; 
+	vector<int>* sorted = new vector<int>;
 
-	LinkedStack<int>* sorted = new LinkedStack<int>;
-	int i = size-1; // index for the vector. We are gonna treat it like a stack.
-
-	// maps dont like to be accessed by index, so Im doing this.
-	// Another way I could do it (and prob. more corrcet) would be to
-	// make a visited map where the key is the nodes key, and the value
-	// is a bool. But arrays are smaller and nicer to work with, so ill be a bit
-	// hacky about it.
-	int curr = 0;
 	for(auto const& it : nodes) {
-		if(!VecContains(visited, it.first)) {
-			i = topSortRecur(i, curr, visited, it.first, sorted);
+		if(!VecContains(sorted, it.first)) {
+			topSortRecur(it.first, sorted);
 		}
-		curr++;
 	}
+
+	reverse(sorted->begin(), sorted->end());
 
 	return sorted;
 }

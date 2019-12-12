@@ -13,6 +13,24 @@ TEST(topology_sort, print_test) {
     graph.printGraph();
 }
 
+TEST(topology_sort, test_8_nodes) {
+    Edge edges[] =
+            {
+                    // pair (x, y) represents edge from x to y
+                    { 7, 5 }, { 7, 6 }, { 5, 4 },
+                    { 6, 4 }, { 5, 2 }, {6, 3}, { 2, 1},
+					{ 3, 1 }, { 1, 0 }
+            };
+
+    DirectedGraph graph(edges, sizeof(edges)/sizeof(edges[0]));
+    auto v = graph.topologySort();
+    vector<int> ans1{7, 6, 5, 4, 3, 2, 1, 0};
+
+    ASSERT_TRUE((*v)==ans1);
+
+    delete v;
+}
+
 TEST(topology_sort, test_5_nodes) {
     Edge edges[] =
             {

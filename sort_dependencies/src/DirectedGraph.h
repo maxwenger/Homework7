@@ -1,6 +1,7 @@
 #ifndef STACK_DIRECTEDGRAPH_H
 #define STACK_DIRECTEDGRAPH_H
 
+#include <algorithm>
 #include <map>
 #include <set>
 #include <vector>
@@ -22,11 +23,11 @@ private:
     // Here a node B is considered a "neighbour" of a node A when there is a edge that goes from A to B
     map<int, SingleLinkedList<int>*> nodes;
 
-	bool VecContains(vector<int> victor, int key) {
-		return std::count(victor.begin(), victor.end(), key);
+	bool VecContains(vector<int>* victor, int key) {
+		return find(victor->begin(), victor->end(), key) != victor->end();
 	}
 
-	int topSortRecur(int vectorIndex, int visitingIndex, vector<bool>& visited, int currentKey, LinkedStack<int>* sorted); 
+	void topSortRecur(int currNode, vector<int>* sorted); 
     void topologySort(int val, LinkedStack<int> &, set<int> &);
 
 public:
